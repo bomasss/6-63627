@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f4f2ec">
+<title>Ар-музей «Оружие Победы» — служебная страница</title>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=PT+Sans:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <svg class="star" viewBox="0 0 24 24"><path d="M12 .9l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 15.9 6 19.2l1.3-6.7-5-4.6 6.8-.8z"/></svg>
+  <span class="brand">Ар-музей · Оружие Победы</span>
+  <span class="ex-id">Служебная</span>
+</header>
+
+<main>
+  <div class="hero">
+    <svg class="big-star" viewBox="0 0 24 24"><path d="M12 .9l2.9 6.2 6.8.8-5 4.6 1.3 6.7L12 15.9 6 19.2l1.3-6.7-5-4.6 6.8-.8z"/></svg>
+    <h1>Оружие Победы</h1>
+    <p>Локальная AR-выставка. Для посетителей страницы доступны <b>только по QR-кодам</b> —
+       экспонаты не связаны между собой.</p>
+    <div class="rule"></div>
+  </div>
+
+  <section class="facts" style="margin-top:18px">
+    <h2>Список экспонатов (для проверки)</h2>
+    <div class="catalog" id="catalog"></div>
+  </section>
+
+  <div class="note">
+    <b>Это служебный экран организатора.</b><br>
+    Печать всех QR-кодов одним листом: откройте <a href="qr-print.html"><b>qr-print.html</b></a>.<br>
+    Если IP ноутбука изменился — перегенерируйте коды: <b>python make_qrcodes.py</b>
+    (или <b>python make_qrcodes.py --ip 192.168.1.50 --port 8000</b>).
+  </div>
+
+  <footer class="site"><span class="ribbon">★ ★ ★</span><br>1941–1945 · Помним и гордимся</footer>
+</main>
+
+<script src="js/data.js"></script>
+<script>
+const cat = document.getElementById("catalog");
+EXHIBITS.forEach(e => {
+  const a = document.createElement("a");
+  a.className = "exhibit-card";
+  a.href = "pages/" + e.id + ".html";
+  a.innerHTML = '<span class="num">' + e.index + '</span><span><span class="t"></span><span class="s"></span></span><span class="arrow">›</span>';
+  a.querySelector(".t").textContent = e.title;
+  a.querySelector(".s").textContent = e.subtitle;
+  cat.appendChild(a);
+});
+</script>
+</body>
+</html>

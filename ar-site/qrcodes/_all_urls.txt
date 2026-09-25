@@ -1,8 +1,8 @@
-WW2 Soviet Uniform           http://21.0.12.245:8017/pages/suvorov-uniform.html
-Форма Красной армии, 1941–1945 http://21.0.12.245:8017/pages/russian-pilot.html
-Russian Pilot                http://21.0.12.245:8017/pages/il2.html
-Лётчик ВВС Красной армии     http://21.0.12.245:8017/pages/yak9.html
-Ilyushin Il-2 Sturmovik      http://21.0.12.245:8017/pages/t34-76.html
-Штурмовик Ил-2 «Летающий танк» http://21.0.12.245:8017/pages/bmp1.html
-Yak-9                        http://21.0.12.245:8017/pages/t34-85.html
-Истребитель Як-9             http://21.0.12.245:8017/pages/t70.html
+WW2 Soviet Uniform           http://21.0.12.245:8000/pages/suvorov-uniform.html
+Форма Красной армии, 1941–1945 http://21.0.12.245:8000/pages/russian-pilot.html
+Russian Pilot                http://21.0.12.245:8000/pages/il2.html
+Лётчик ВВС Красной армии     http://21.0.12.245:8000/pages/yak9.html
+Ilyushin Il-2 Sturmovik      http://21.0.12.245:8000/pages/t34-76.html
+Штурмовик Ил-2 «Летающий танк» http://21.0.12.245:8000/pages/bmp1.html
+Yak-9                        http://21.0.12.245:8000/pages/t34-85.html
+Истребитель Як-9             http://21.0.12.245:8000/pages/t70.html

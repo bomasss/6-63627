@@ -1,0 +1,212 @@
+/* ============================================================
+   АР-МУЗЕЙ «ОРУЖИЕ ПОБЕДЫ» — светлый, строгий, военный стиль
+   Mobile-first: всё рассчитано на телефон.
+   ============================================================ */
+:root {
+  --paper: #f4f2ec;        /* светлый фон, цвет бумаги архива */
+  --card: #ffffff;
+  --ink: #1d1f22;          /* почти чёрный текст */
+  --muted: #6b6d70;
+  --olive: #3f4a35;        /* хаки — акцент №1 */
+  --gold: #a8842c;         /* латунь / георгиевский */
+  --line: #ddd8cc;
+  --danger: #8e2f24;       /* красный акцент (звезда) */
+  --radius: 14px;
+  --shadow: 0 2px 10px rgba(29,31,34,.07), 0 8px 24px rgba(29,31,34,.05);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  font-family: "PT Sans", "Segoe UI", Roboto, system-ui, sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.55;
+  min-height: 100dvh;
+}
+
+h1, h2, h3, .stencil {
+  font-family: "Oswald", "PT Sans Narrow", "Arial Narrow", Impact, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 600;
+}
+
+a { color: inherit; }
+
+/* ---------- Шапка ---------- */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  display: flex; align-items: center; gap: 10px;
+  padding: calc(10px + env(safe-area-inset-top)) 16px 10px;
+  background: rgba(244,242,236,.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--ink);
+}
+.topbar .star { width: 22px; height: 22px; flex: none; fill: var(--danger); }
+.topbar .brand {
+  font-family: "Oswald", sans-serif; text-transform: uppercase;
+  letter-spacing: .12em; font-size: 14px; font-weight: 600;
+}
+.topbar .ex-id {
+  margin-left: auto; font-size: 12px; color: var(--muted);
+  border: 1px solid var(--line); border-radius: 999px; padding: 2px 10px;
+  background: var(--card); white-space: nowrap;
+}
+
+/* ---------- Экспонат ---------- */
+main { max-width: 720px; margin: 0 auto; padding: 16px 16px calc(48px + env(safe-area-inset-bottom)); }
+
+.exhibit-head { margin: 8px 0 14px; }
+.exhibit-head .category {
+  display: inline-block; font-size: 11px; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--olive);
+  border-left: 3px solid var(--gold); padding-left: 8px; margin-bottom: 8px;
+}
+.exhibit-head h1 { font-size: clamp(26px, 7vw, 40px); line-height: 1.1; }
+.exhibit-head .subtitle { color: var(--muted); margin-top: 6px; font-size: 15px; }
+
+/* ---------- AR/3D вьюпорт ---------- */
+.viewer-card {
+  position: relative;
+  background: linear-gradient(180deg, #ffffff 0%, #eceadf 100%);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.viewer {
+  position: relative;
+  height: min(52vh, 460px);
+  touch-action: none;           /* жесты достаются модели, а не странице */
+  cursor: grab;
+}
+.viewer:active { cursor: grabbing; }
+.viewer canvas { display: block; width: 100% !important; height: 100% !important; outline: none; }
+
+.viewer-hint {
+  position: absolute; left: 50%; bottom: 14px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(29,31,34,.78); color: #fff;
+  font-size: 12px; letter-spacing: .04em;
+  padding: 7px 14px; border-radius: 999px;
+  pointer-events: none; transition: opacity .5s;
+  white-space: nowrap;
+}
+.viewer-hint.hidden { opacity: 0; }
+.viewer-hint svg { width: 14px; height: 14px; fill: #fff; flex: none; }
+
+.viewer-toolbar {
+  display: flex; gap: 8px; padding: 10px;
+  border-top: 1px dashed var(--line);
+  background: var(--card);
+}
+.vbtn {
+  flex: 1; min-height: 44px;              /* крупная зона касания */
+  border: 1px solid var(--ink); background: var(--card);
+  border-radius: 10px; cursor: pointer;
+  font-family: "Oswald", sans-serif; text-transform: uppercase;
+  letter-spacing: .08em; font-size: 12px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  transition: background .15s, transform .05s;
+}
+.vbtn:active { transform: scale(.97); }
+.vbtn.primary { background: var(--olive); border-color: var(--olive); color: #fff; }
+.vbtn.active { background: var(--ink); border-color: var(--ink); color: #fff; }
+.vbtn[disabled] { opacity: .4; cursor: not-allowed; }
+
+/* overlay при загрузке / ошибке */
+.overlay {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 10px;
+  background: rgba(244,242,236,.88); text-align: center; padding: 20px;
+  font-size: 14px; color: var(--muted); z-index: 5;
+}
+.overlay.hidden { display: none; }
+.spinner {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 3px solid var(--line); border-top-color: var(--olive);
+  animation: spin 1s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ---------- Факты ---------- */
+.facts { margin-top: 26px; }
+.facts h2 {
+  font-size: 18px; display: flex; align-items: center; gap: 10px;
+  padding-bottom: 10px; border-bottom: 2px solid var(--ink); margin-bottom: 4px;
+}
+.facts h2::after { content: ""; flex: 1; }
+.fact {
+  display: flex; gap: 14px; padding: 14px 2px;
+  border-bottom: 1px solid var(--line);
+}
+.fact:last-child { border-bottom: none; }
+.fact-num {
+  flex: none; width: 34px; height: 34px; border-radius: 8px;
+  background: var(--ink); color: #fff;
+  font-family: "Oswald", sans-serif; font-size: 14px;
+  display: flex; align-items: center; justify-content: center;
+}
+.fact p { font-size: 15px; }
+
+footer.site {
+  margin-top: 34px; padding-top: 14px; border-top: 1px solid var(--line);
+  font-size: 12px; color: var(--muted); text-align: center;
+}
+footer.site .ribbon {
+  display: inline-block; margin-bottom: 6px; color: var(--danger);
+  letter-spacing: .3em;
+}
+
+/* ---------- Титульная страница ---------- */
+.hero { padding: 34px 4px 10px; text-align: center; }
+.hero .big-star { width: 54px; height: 54px; fill: var(--danger); }
+.hero h1 { font-size: clamp(28px, 8vw, 44px); margin-top: 10px; }
+.hero p { color: var(--muted); margin-top: 8px; font-size: 15px; }
+.hero .rule {
+  width: 72px; height: 4px; margin: 16px auto 0;
+  background: repeating-linear-gradient(90deg, var(--gold) 0 12px, transparent 12px 18px);
+}
+
+.catalog { display: grid; grid-template-columns: 1fr; gap: 12px; margin-top: 22px; }
+@media (min-width: 560px) { .catalog { grid-template-columns: 1fr 1fr; } }
+
+.exhibit-card {
+  display: flex; align-items: center; gap: 14px;
+  background: var(--card); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 14px;
+  text-decoration: none; box-shadow: var(--shadow);
+  transition: transform .12s, border-color .12s;
+}
+.exhibit-card:active { transform: scale(.98); border-color: var(--olive); }
+.exhibit-card .num {
+  flex: none; width: 46px; height: 46px; border-radius: 10px;
+  background: var(--olive); color: #fff;
+  font-family: "Oswald", sans-serif; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.exhibit-card .t { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .04em; font-size: 15px; }
+.exhibit-card .s { font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.exhibit-card .arrow { margin-left: auto; color: var(--muted); font-size: 18px; }
+
+.note {
+  margin-top: 26px; background: #fbf8ef; border: 1px dashed var(--gold);
+  border-radius: var(--radius); padding: 14px 16px; font-size: 13.5px; color: #55513f;
+}
+.note b { color: var(--ink); }
+
+/* ---------- Печать QR-листов ---------- */
+@media print {
+  body { background: #fff; }
+  .no-print { display: none !important; }
+  .qr-sheet { page-break-inside: avoid; }
+}
+.qr-sheet {
+  background: #fff; border: 1px solid var(--line); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 22px; margin: 16px auto; max-width: 420px;
+  text-align: center;
+}
+.qr-sheet img { width: 260px; height: 260px; image-rendering: pixelated; }
+.qr-sheet .caption { margin-top: 10px; font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .08em; }
+.qr-sheet .url { font-size: 11px; color: var(--muted); word-break: break-all; margin-top: 4px; }
